@@ -1,23 +1,7 @@
 INFO:     Will watch for changes in these directories: ['/home/workspace']
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [152] using StatReload
-INFO:     Started server process [154]
+INFO:     Started reloader process [203] using StatReload
+INFO:     Started server process [205]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     172.20.0.1:44474 - "HEAD / HTTP/1.1" 405 Method Not Allowed
-INFO:     172.20.0.1:44500 - "GET /subjects HTTP/1.1" 200 OK
-INFO:     172.20.0.1:44488 - "GET /students HTTP/1.1" 200 OK
-INFO:     172.20.0.1:44500 - "GET /subjects HTTP/1.1" 200 OK
-INFO:     172.20.0.1:44488 - "GET /students HTTP/1.1" 200 OK
-INFO:     172.20.0.1:44532 - "GET /lectures HTTP/1.1" 200 OK
-INFO:     172.20.0.1:44516 - "GET /grades HTTP/1.1" 200 OK
-INFO:     172.20.0.1:44532 - "GET /grades HTTP/1.1" 200 OK
-INFO:     172.20.0.1:44516 - "GET /lectures HTTP/1.1" 200 OK
-INFO:     172.20.0.1:59498 - "GET /subjects HTTP/1.1" 200 OK
-INFO:     172.20.0.1:59504 - "GET /students HTTP/1.1" 200 OK
-INFO:     172.20.0.1:59524 - "GET /grades HTTP/1.1" 200 OK
-INFO:     172.20.0.1:59518 - "GET /lectures HTTP/1.1" 200 OK
-INFO:     172.20.0.1:59498 - "GET /subjects HTTP/1.1" 200 OK
-INFO:     172.20.0.1:59504 - "GET /students HTTP/1.1" 200 OK
-INFO:     172.20.0.1:59524 - "GET /grades HTTP/1.1" 200 OK
-INFO:     172.20.0.1:59518 - "GET /lectures HTTP/1.1" 200 OK
+INFO:     172.20.0.1:36892 - "HEAD / HTTP/1.1" 405 Method Not Allowed
