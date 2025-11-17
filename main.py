@@ -1,17 +1,18 @@
 import os
+import secrets
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Optional
-from bson import ObjectId
 
 from database import db, create_document, get_documents
 from schemas import (
     Teacher, Student, Subject, Lecture, Exam, Grade,
-    CreateStudent, CreateSubject, CreateLecture, CreateExam, CreateGrade
+    CreateStudent, CreateSubject, CreateLecture, CreateExam, CreateGrade,
+    NewsletterSubscriber, CreateNewsletterSubscribe,
 )
 
-app = FastAPI(title="TeachEase API", version="1.0.0")
+app = FastAPI(title="TeachEase API", version="1.1.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -156,6 +157,27 @@ def list_grades(roll_number: Optional[str] = None, subject_code: Optional[str] =
         filt["subject_code"] = subject_code
     docs = get_documents("grade", filt)
     return serialize_docs(docs)
+
+
+# Newsletter (double opt-in)
+@app.post("/newsletter/subscribe")
+def newsletter_subscribe(payload: CreateNewsletterSubscribe):
+    token = secrets.token_urlsafe(24)
+    sub = NewsletterSubscriber(email=payload.email, status="pending", token=token)
+    sid = create_document("newslettersubscriber", sub)
+    backend_base = os.getenv("BACKEND_URL") or ""
+    confirm_url = f"{backend_base}/newsletter/confirm?token={token}"
+    return {"id": sid, "status": "pending", "confirm_url": confirm_url}
+
+@app.get("/newsletter/confirm")
+def newsletter_confirm(token: str):
+    if db is None:
+        raise HTTPException(status_code=500, detail="Database not available")
+    doc = db["newslettersubscriber"].find_one({"token": token})
+    if not doc:
+        raise HTTPException(status_code=404, detail="Invalid token")
+    db["newslettersubscriber"].update_one({"_id": doc["_id"]}, {"$set": {"status": "confirmed", "confirmed_at": __import__('datetime').datetime.utcnow()}})
+    return {"status": "confirmed"}
 
 
 if __name__ == "__main__":

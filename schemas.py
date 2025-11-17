@@ -4,7 +4,7 @@ Database Schemas for TeachEase
 Each Pydantic model corresponds to a MongoDB collection (collection name is the lowercase of the class name).
 """
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, EmailStr
 from typing import Optional, List
 from datetime import datetime
 
@@ -88,3 +88,14 @@ class CreateGrade(BaseModel):
     marks_obtained: float
     exam_title: Optional[str] = None
     remarks: Optional[str] = None
+
+# Marketing/Newsletter
+
+class NewsletterSubscriber(BaseModel):
+    email: EmailStr
+    status: str = Field("pending", description="pending or confirmed")
+    token: Optional[str] = None
+    confirmed_at: Optional[datetime] = None
+
+class CreateNewsletterSubscribe(BaseModel):
+    email: EmailStr
